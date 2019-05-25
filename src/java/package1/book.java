@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 
 public class book {
@@ -86,11 +87,37 @@ public class book {
 
     }
     
+    public ResultSet getNewBookList(){
+        
+        Date date = new Date();
+        Calendar cal = Calendar.getInstance();
+        cal.setTime ( date ); // convert your date to Calendar object
+        int daysToDecrement = -5;
+        cal.add(Calendar.DATE, daysToDecrement);
+        date = cal.getTime(); // again get back your date object
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+	String prev_date = dateFormat.format(date); //2016/11/16 12:08:43
+        prev_date += " 00:00:00"; 
+        
+        String sql = "SELECT * FROM `book` WHERE create_at > '"+prev_date+"' ORDER by `create_at` DESC LIMIT 5";
+        System.out.println(sql);
+    
+        try {
+            pst = conn.prepareStatement(sql);
+            rs = pst.executeQuery();
+            return rs;
+        } catch (SQLException e) {
+            return null;
+        }
+
+    }
+    
 
     
     public boolean addBook(){
         try{
             String q = "Insert into book (isbn, name, author, bookCount) values('" + getISBN()+ "', '" + getBookName() + "', '" + getAuthor()+ "','" + getBookCount()+ "')";
+            //String q2 = "Insert into new_book (isbn, name, author) values('" + getISBN()+ "', '" + getBookName() + "', '" + getAuthor()+ "')";
             pst = conn.prepareStatement(q);
             pst.execute();
             return true;

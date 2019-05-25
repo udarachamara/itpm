@@ -31,11 +31,12 @@ public class login extends HttpServlet {
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
         member u = new member();
+        Encription en = new Encription();
 
         String a;
-
+        String password = en.crypt(request.getParameter("password"));
         u.setUserName(request.getParameter("userName"));
-        u.setPassword(request.getParameter("password"));
+        u.setPassword(password);
 
         a = u.checkUser(u.getUserName(), u.getPassword());
 

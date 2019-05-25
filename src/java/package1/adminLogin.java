@@ -31,11 +31,13 @@ public class adminLogin extends HttpServlet {
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
         librarian u = new librarian();
+        Encription en = new Encription();
 
         String a;
+        String password = en.crypt(request.getParameter("password"));
 
         u.setUserName(request.getParameter("userName"));
-        u.setPassword(request.getParameter("password"));
+        u.setPassword(password);
 
         a = u.checkAdmin(u.getUserName(), u.getPassword());
 
