@@ -79,6 +79,7 @@
                 <%} else if(data.getLoggedUserId() != null) { %>
                 <a href="member.jsp" class="w3-bar-item w3-button w3-hide-small w3-hover-white"><h6>MEMBER</h6></a>
                 <a href="viewBook.jsp" class="w3-bar-item w3-button w3-hide-small w3-hover-white"><h6>BOOKS</h6></a>
+                <a href="newBook.jsp" class="w3-bar-item w3-button w3-hide-small w3-hover-white"><h6>NEW BOOKS</h6></a>
                 <%} else if(data.getLoggedAdminId() != null){%>
                 <a href="addBook.jsp" class="w3-bar-item w3-button w3-hide-small w3-hover-white"><h6>ADD BOOK</h6></a>
                 <a href="manageBook.jsp" class="w3-bar-item w3-button w3-hide-small w3-hover-white"><h6>UPDATE BOOK</h6></a>

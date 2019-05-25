@@ -7,7 +7,7 @@
 <!DOCTYPE html>
 
 <html>
-    <title>Adopt Pet</title>
+    <title>MY BOOKS</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="w3.css">
@@ -83,10 +83,12 @@
                 <%} else if(data.getLoggedUserId() != null) { %>
                 <a href="member.jsp" class="w3-bar-item w3-button w3-hide-small w3-hover-white"><h6>MEMBER</h6></a>
                 <a href="viewBook.jsp" class="w3-bar-item w3-button w3-hide-small w3-hover-white"><h6>BOOKS</h6></a>
+                <a href="newBook.jsp" class="w3-bar-item w3-button w3-hide-small w3-hover-white"><h6>NEW BOOKS</h6></a>
                 <%} else if(data.getLoggedAdminId() != null){%>
                 <a href="addBook.jsp" class="w3-bar-item w3-button w3-hide-small w3-hover-white"><h6>ADD BOOK</h6></a>
                 <a href="updateBook.jsp" class="w3-bar-item w3-button w3-hide-small w3-hover-white"><h6>UPDATE BOOK</h6></a>
                 <a href="issueBook.jsp" class="w3-bar-item w3-button w3-hide-small w3-hover-white"><h6>ISSUE BOOK</h6></a>
+                <a href="returnbooks.jsp" class="w3-bar-item w3-button w3-hide-small w3-hover-white"><h6>RETURN BOOK</h6></a>
                 <%}%>
                 
                 <a href="about.jsp" class="w3-bar-item w3-button w3-hide-small w3-hover-white"><h6>ABOUT</h6></a>

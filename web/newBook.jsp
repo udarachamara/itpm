@@ -1,16 +1,25 @@
 
+<%@page import="java.util.Date"%>
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.text.DateFormat"%>
+<%@page import="java.sql.ResultSet"%>
+<%@page import="package1.book"%>
+<%@page import="java.util.ArrayList"%>
 <%@page import="package1.data"%>
-<%@page import="package1.logginInfo"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+
 <html>
-    <title>ABOUT</title>
+    <title>NEW BOOKS</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="w3.css">
     <link rel="stylesheet" href="black.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
     <link rel="stylesheet" href="font.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
         html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif;}
         .w3-sidebar {
@@ -29,11 +38,11 @@
             z-index: -2;
         }
     </style>
-    <body background="Images/back.jpg" >
+    <body background="Images/light.jpg">
 
 
 
-        <!-- Sidebar -->
+       <!-- Sidebar -->
         <nav class="w3-sidebar w3-bar-block w3-collapse w3-large w3-theme-l5 w3-animate-left"  id="mySidebar" >
             <a href="javascript:void(0)" onclick="w3_close()" class="w3-right w3-xlarge w3-padding-large w3-hover-black w3-hide-large" title="Close Menu">
                 <i class="fa fa-remove"></i>
@@ -80,7 +89,7 @@
                 <a href="newBook.jsp" class="w3-bar-item w3-button w3-hide-small w3-hover-white"><h6>NEW BOOKS</h6></a>
                 <%} else if(data.getLoggedAdminId() != null){%>
                 <a href="addBook.jsp" class="w3-bar-item w3-button w3-hide-small w3-hover-white"><h6>ADD BOOK</h6></a>
-                <a href="manageBook.jsp" class="w3-bar-item w3-button w3-hide-small w3-hover-white"><h6>UPDATE BOOK</h6></a>
+                <a href="updateBook.jsp" class="w3-bar-item w3-button w3-hide-small w3-hover-white"><h6>UPDATE BOOK</h6></a>
                 <a href="issueBook.jsp" class="w3-bar-item w3-button w3-hide-small w3-hover-white"><h6>ISSUE BOOK</h6></a>
                 <a href="returnbooks.jsp" class="w3-bar-item w3-button w3-hide-small w3-hover-white"><h6>RETURN BOOK</h6></a>
                 <%}%>
@@ -96,55 +105,52 @@
         <!-- Main content: shift it to the right by 250 pixels when the sidebar is visible -->
         <div  class="w3-main" style="margin-left:250px">
 
-            <div class="w3-row w3-padding-64">
-                <div class="w3-twothird w3-container">
-                    
-                    <br/><br/><br/>
-                    <h1 class="w3-text-teal">About ARD Organization</h1>
-                    
-                    <div class="col-md-8">
-
-                        <center ><h3 class="fontheading3">VISION AND MISSION</h3> </center>
-                    <hr/> 
-                    
+            <div class="w3-row w3-padding-64 w3-padding-small">
+                <div class="w3-twothird w3-container w3-padding-large">
+                    <br/>
+                    <h1>NEW BOOKS<br/></h1>
                     <br/>
 
-                    <center><h4>Vision</h4></center>
-                    <br class="br"/>
-                    <br class="br"/>
-                    <p class="vi_mi_text">Being the national knowledge center, providing access to library and information services for all.</p>
-                    
-                    <br/>
-                    
-                    <center><h4>Mission</h4></center>
-                    <br class="br"/>
-                    <br class="br"/>
-                    <p class="vi_mi_text">Creating a knowledge society through the preservation of intellectual heritage of the nation.</p><p class="vi_mi_text">Development of National library and information system.</p><p class="vi_mi_text">Encouraging the utilization of information and communication technology for an effective library service.</p><p class="vi_mi_text">Providing bibliographical services and assisting for book publication.</p>
+                    <%book p = new book();%>
+                    <%String isbn, name, author, bookCount, create_at;%>
+                    <%ResultSet rs = p.getNewBookList();%>
 
-                    <br class="br"/>
-                    <h3 class="fontheading3">WHO WE ARE</h3> 
-                    
+                    <%while (rs.next()) {%>
+                    <%isbn = rs.getString("isbn");%>
+                    <%name = rs.getString("name");%>
+                    <%author = rs.getString("author");%>
+                    <%
+                        
+                        Date date = rs.getDate("create_at");
+                        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                        create_at = dateFormat.format(date); //2016/11/16 12:08:43
+                    %>
 
-                    <p align="justify">The National Library is mainly a research and a reference library and it is the main library and information centre in Sri Lanka. It intends to provide library resources as well as information to all Sri Lankans through the National Library. The library has five floors with a floor area of 11,250 sqm. and 866 meters of shelving. There are three reading areas with a seating capacity for 320 readers and several special study rooms, air conditioned auditorium with 145 seats and a conference room with 30 seats. The current library material stock of approximately over 1,000,000 volumes will form the nucleus of the future national collection.</p>
-                    <p align="justify">The National Library has been building it’s collection since 1970’s through it’s acquisition programme. Methods of acquiring library material are purchases, deposits, donations and exchange (local and international). The National Library was attributed the Legal Deposit status by the Printers and Publishers Act in 1976 which made provisions to deposit a copy of each local publication in the National Library.</p>
-                    
+                    <div class="w3-rest w3-container w3-border w3-padding-large">
+
+                        <form method="post" action="adopt" class="w3-center" style="align-items: center; ">
+
+                            <p style="text-align: left" class=" w3-padding-small " id="id">ISBN : <%=isbn%> </p>
+                            <p style="text-align: left" class=" w3-padding-small " id="petName">Name : <%=name%> </p>
+                            <p style="text-align: left" class=" w3-padding-small " id="author">Author : <%=author%> </p>
+                            <p style="text-align: left" class=" w3-padding-small " id="age">Added Date : <%=create_at%></p>
+                            
+                            
+                        </form>
+
+
+                    </div>
+                    <%}%>
+
 
 
                 </div>
 
-                    <p><br/>
-                         </p>
+                <div style="list-style-type: circle" class="w3-third w3-container w3-padding-64">
 
-                    <br/><br/>
+                    <p class=" w3-center"><img src="Images/back.jpg" alt="a" height="170" width="285"></p>
+                    <p class=" w3-center w3-padding-64"><img src="Images/women.jpg" alt="d" height="170" width="285"></p>
 
-                    
-
-                </div>
-
-                <div class="w3-third w3-container w3-padding-64">
-                    <p class=" w3-center w3-padding-64"><img src="Images/women.jpg" alt="women" height="200" width="285"></p>
-                    <p class=" w3-center"><img src="Images/map.png" alt="BOOK" height="190" width="295"></p>
-                    
                 </div>
             </div>
 
@@ -179,3 +185,5 @@
 
     </body>
 </html>
+
+
