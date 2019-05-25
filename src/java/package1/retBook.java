@@ -20,17 +20,17 @@ import java.util.Date;
  * @author udara
  */
 public class retBook {
-    
+
     private int id;
     private double amount;
     private Timestamp ddate;
     private String ISBN;
     private String name;
-    
+
     PreparedStatement pst;
     Connection conn = null;
     ResultSet rs;
-    
+
     public retBook() {
         conn = DBconnect.connect();
     }
@@ -74,9 +74,9 @@ public class retBook {
     public void setName(String name) {
         this.name = name;
     }
-    
+
       public ResultSet getreturnList(){
-        
+
         Date date = new Date();
         Calendar cal = Calendar.getInstance();
         cal.setTime ( date ); // convert your date to Calendar object
@@ -85,11 +85,11 @@ public class retBook {
         date = cal.getTime(); // again get back your date object
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 	String prev_date = dateFormat.format(date); //2016/11/16 12:08:43
-        prev_date += " 00:00:00"; 
-        
+        prev_date += " 00:00:00";
+
         String sql = "SELECT * FROM `borrowedbooks`";
-        
-    
+
+
         try {
             pst = conn.prepareStatement(sql);
             rs = pst.executeQuery();
@@ -99,7 +99,7 @@ public class retBook {
             return null;
         }
       }
-      
+
       public double getDelayAmount(String memberId , String isbn){
         double pAmount = 15.00;
         int delayDate = 0;
@@ -111,9 +111,9 @@ public class retBook {
         date = cal.getTime(); // again get back your date object
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 	String delay = dateFormat.format(date); //2016/11/16 12:08:43
-        delay += " 00:00:00"; 
+        delay += " 00:00:00";
           String sql = "SELECT * FROM `borrowedbooks` WHERE borrowedDate <= '"+delay+"' AND memberId = '"+memberId+"' AND isbn = '"+isbn+"' ";
-          
+
           try {
             pst = conn.prepareStatement(sql);
             rs = pst.executeQuery();
@@ -121,23 +121,24 @@ public class retBook {
                 try{
                     Date ddate = dateFormat.parse(delay);
                 }catch(Exception e){
-                    
+
                 }
-                
+
                 Date borrowdate = rs.getDate("borrowedDate");
                 delayDate = (int) Math.abs(borrowdate.getTime() - borrowdate.getTime());
                 //double retAmount = pAmount * delayDate;
             double retAmount = pAmount;
             return retAmount;
             }
-            
+
         } catch (SQLException e) {
-            
+
         }
           return 0.0;
-          
+
       }
-      
+      //to delete a book
+
       public boolean returnBook(int id, String isbn){
          try{
             String sql = "delete from borrowedbooks where id = '"+id+"'";
@@ -152,5 +153,5 @@ public class retBook {
             return false;
         }
       }
-    
+
 }
